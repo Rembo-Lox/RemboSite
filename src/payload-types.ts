@@ -391,7 +391,7 @@ export interface ChatMessage {
    */
   name: string;
   /**
-   * Содержимое сообщения.
+   * Содержимое сообщения. Можно редактировать в CMS.
    */
   message: string;
   updatedAt: string;
