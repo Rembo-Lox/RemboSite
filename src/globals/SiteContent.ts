@@ -1,0 +1,232 @@
+﻿import type { GlobalConfig } from 'payload'
+
+export const SiteContent: GlobalConfig = {
+  slug: 'site-content',
+  label: 'Настройки сайта',
+  fields: [
+    {
+      name: 'branding',
+      type: 'group',
+      label: 'Брендинг',
+      admin: { description: 'Логотип, название и базовое SEO-описание.' },
+      fields: [
+        {
+          name: 'siteName',
+          type: 'text',
+          label: 'Название сайта',
+          admin: { description: 'Используется в title вкладки и в шапке.' },
+        },
+        {
+          name: 'siteDescription',
+          type: 'textarea',
+          label: 'Описание сайта',
+          admin: { description: 'Краткое описание для мета-тегов.' },
+        },
+        {
+          name: 'logo',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Логотип',
+          admin: { description: 'Изображение логотипа в шапке (опционально).' },
+        },
+        {
+          name: 'logoText',
+          type: 'text',
+          label: 'Текст рядом с лого',
+          admin: { description: 'Показывается, если нужен текстовый бренд в шапке.' },
+        },
+      ],
+    },
+    {
+      name: 'design',
+      type: 'group',
+      label: 'Дизайн',
+      admin: { description: 'Глобальные цвета и стиль карточек/панелей.' },
+      fields: [
+        {
+          name: 'accentColor',
+          type: 'text',
+          label: 'Акцентный цвет',
+          admin: { description: 'HEX-цвет, например #63b3ed.' },
+        },
+        {
+          name: 'backgroundFrom',
+          type: 'text',
+          label: 'Фон: верхний цвет',
+          admin: { description: 'HEX-цвет начала фонового градиента.' },
+        },
+        {
+          name: 'backgroundTo',
+          type: 'text',
+          label: 'Фон: нижний цвет',
+          admin: { description: 'HEX-цвет конца фонового градиента.' },
+        },
+        {
+          name: 'glassOpacity',
+          type: 'number',
+          min: 20,
+          max: 95,
+          defaultValue: 72,
+          label: 'Прозрачность стекла (%)',
+          admin: { description: 'Прозрачность стеклянных панелей.' },
+        },
+        {
+          name: 'panelRadius',
+          type: 'number',
+          min: 8,
+          max: 36,
+          defaultValue: 18,
+          label: 'Скругление панелей (px)',
+        },
+      ],
+    },
+    {
+      name: 'cardSettings',
+      type: 'group',
+      label: 'Карточки',
+      admin: { description: 'Правила отображения карточек проектов и друзей.' },
+      fields: [
+        {
+          name: 'columnsDesktop',
+          type: 'number',
+          min: 1,
+          max: 6,
+          defaultValue: 3,
+          label: 'Колонки на десктопе',
+        },
+        {
+          name: 'columnsTablet',
+          type: 'number',
+          min: 1,
+          max: 4,
+          defaultValue: 2,
+          label: 'Колонки на планшете',
+        },
+        {
+          name: 'columnsMobile',
+          type: 'number',
+          min: 1,
+          max: 2,
+          defaultValue: 1,
+          label: 'Колонки на мобильном',
+        },
+        {
+          name: 'showStatusBadge',
+          type: 'checkbox',
+          defaultValue: true,
+          label: 'Показывать бейдж статуса',
+        },
+        {
+          name: 'enableHoverExpand',
+          type: 'checkbox',
+          defaultValue: true,
+          label: 'Раскрывать карточку на hover',
+        },
+      ],
+    },
+    {
+      name: 'navigation',
+      type: 'group',
+      label: 'Навигация',
+      fields: [
+        {
+          name: 'items',
+          type: 'array',
+          label: 'Пункты меню',
+          admin: { description: 'Пункты плавающей навигации в шапке.' },
+          fields: [
+            { name: 'label', type: 'text', required: true, label: 'Название' },
+            { name: 'href', type: 'text', required: true, label: 'Ссылка (href)' },
+            {
+              name: 'isVisible',
+              type: 'checkbox',
+              defaultValue: true,
+              label: 'Показывать пункт',
+            },
+          ],
+        },
+        { name: 'donateLabel', type: 'text', label: 'Текст кнопки доната' },
+        { name: 'donateUrl', type: 'text', label: 'Ссылка доната' },
+      ],
+    },
+    {
+      name: 'pages',
+      type: 'group',
+      label: 'Страницы',
+      admin: { description: 'Тексты и видимость блоков существующих страниц.' },
+      fields: [
+        {
+          name: 'home',
+          type: 'group',
+          label: 'Главная',
+          fields: [
+            { name: 'isVisible', type: 'checkbox', defaultValue: true, label: 'Показывать страницу' },
+            { name: 'eyebrow', type: 'text', label: 'Надзаголовок' },
+            { name: 'title', type: 'text', label: 'Заголовок' },
+            { name: 'description', type: 'textarea', label: 'Описание' },
+            {
+              name: 'discordUserId',
+              type: 'text',
+              label: 'Discord User ID профиля',
+              admin: { description: 'Какой Discord-профиль показывать в блоке live-статуса.' },
+            },
+            {
+              name: 'socialLinks',
+              type: 'array',
+              label: 'Соцсети и ссылки',
+              fields: [
+                { name: 'icon', type: 'text', required: true, label: 'Иконка (текст)' },
+                { name: 'label', type: 'text', required: true, label: 'Заголовок' },
+                { name: 'note', type: 'text', required: true, label: 'Аннотация' },
+                { name: 'url', type: 'text', required: true, label: 'URL' },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'portfolio',
+          type: 'group',
+          label: 'Портфолио',
+          fields: [
+            { name: 'isVisible', type: 'checkbox', defaultValue: true, label: 'Показывать страницу' },
+            { name: 'eyebrow', type: 'text', label: 'Надзаголовок' },
+            { name: 'title', type: 'text', label: 'Заголовок' },
+            { name: 'description', type: 'textarea', label: 'Описание' },
+            { name: 'emptyCategoryDescription', type: 'text', label: 'Текст пустой категории' },
+          ],
+        },
+        {
+          name: 'friends',
+          type: 'group',
+          label: 'Друзья',
+          fields: [
+            { name: 'isVisible', type: 'checkbox', defaultValue: true, label: 'Показывать страницу' },
+            { name: 'eyebrow', type: 'text', label: 'Надзаголовок' },
+            { name: 'title', type: 'text', label: 'Заголовок' },
+            { name: 'description', type: 'textarea', label: 'Описание' },
+            { name: 'emptyDescription', type: 'text', label: 'Текст пустого списка' },
+          ],
+        },
+        {
+          name: 'liveChat',
+          type: 'group',
+          label: 'Live chat',
+          fields: [
+            { name: 'isVisible', type: 'checkbox', defaultValue: true, label: 'Показывать страницу' },
+            { name: 'title', type: 'text', label: 'Заголовок' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'footer',
+      type: 'group',
+      label: 'Футер',
+      fields: [
+        { name: 'copyright', type: 'text', label: 'Копирайт' },
+        { name: 'domainsText', type: 'text', label: 'Текст доменов без ссылок' },
+        { name: 'vertexpointUrl', type: 'text', label: 'Ссылка vertexpoint.ru' },
+      ],
+    },
+  ],
+}

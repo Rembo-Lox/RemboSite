@@ -29,9 +29,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.tmp*
 
 # env files (can opt-in for committing if needed)
 .env*
+!*.example
+
+# payload sqlite db
+payload.db*
+rembo-site/
 
 # vercel
 .vercel
