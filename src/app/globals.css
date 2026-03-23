@@ -61,7 +61,13 @@ a {
   inset: 12px 0 auto;
   pointer-events: none;
   position: fixed;
+  transition: transform 0.22s ease, opacity 0.2s ease;
   z-index: 20;
+}
+
+.floating-nav-wrap.is-hidden {
+  opacity: 0;
+  transform: translateY(-120%);
 }
 
 .floating-nav {
@@ -808,14 +814,53 @@ a {
 
 @media (max-width: 700px) {
   .site-main {
-    padding-top: 96px;
+    padding-top: 152px;
+  }
+
+  .floating-nav-wrap {
+    inset: 8px 0 auto;
   }
 
   .floating-nav {
-    border-radius: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
+    border-radius: 18px;
+    display: grid;
+    gap: 6px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
     max-width: calc(100% - 20px);
+    padding: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .nav-brand {
+    justify-self: start;
+    min-width: 0;
+  }
+
+  .nav-donate {
+    justify-self: end;
+    white-space: nowrap;
+  }
+
+  .nav-links-wrap {
+    grid-column: 1 / -1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .nav-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .nav-links-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .floating-nav-wrap.is-hidden {
+    transform: translateY(-140%);
   }
 
   .portfolio-grid,

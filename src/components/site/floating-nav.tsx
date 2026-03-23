@@ -31,6 +31,7 @@ export const FloatingNav = ({
   const linksWrapRef = useRef<HTMLDivElement | null>(null)
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
   const [indicator, setIndicator] = useState({ opacity: 0, width: 0, x: 0 })
+  const [isHidden, setHidden] = useState(false)
 
   const preparedItems = useMemo(() => items.filter((item) => item.href && item.label), [items])
 
@@ -63,8 +64,39 @@ export const FloatingNav = ({
     return () => cancelAnimationFrame(frame)
   }, [pathname, preparedItems])
 
+  useEffect(() => {
+    let ticking = false
+    let prevY = window.scrollY
+
+    const update = () => {
+      const y = window.scrollY
+      const atTop = y <= 8
+      const scrollingDown = y > prevY + 4
+      const scrollingUp = y < prevY - 4
+
+      if (atTop || scrollingUp) {
+        setHidden(false)
+      } else if (scrollingDown) {
+        setHidden(true)
+      }
+
+      prevY = y
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <header className="floating-nav-wrap">
+    <header className={`floating-nav-wrap${isHidden ? ' is-hidden' : ''}`}>
       <nav className="floating-nav">
         <Link className="nav-brand" href="/">
           {logoUrl ? <Image alt={logoAlt || 'Логотип'} height={24} src={logoUrl} width={24} /> : null}
